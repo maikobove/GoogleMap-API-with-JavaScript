@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+  <head>      
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <meta http-equiv="content-type" content="text/html; charset=UTF-8"/>
+    <style type="text/css">
+        html { height: 100% }
+        body { height: 100%; margin: 0px; padding: 0px }
+        #map_canvas { height: 100%; width: 65%; float: left }
+        #directionsPanel { font-size: 65%; height: 100%; width: 35%; float: right }
+        html body {
+                height: 100%;    
+                font-family: Arial, Helvetica, sans-serif;
+                color: darkseagreen;
+                text-align: center;
+            }
+
+        footer{
+                font-size: 65%;
+                color: whitesmoke;
+                background-color: darkseagreen;
+                position: fixed;
+                left: 0;
+                bottom: 0px;
+                width: 100%;
+                text-align: center;
+        }        
+    </style>
+    <title>GoogleMaps3 Route Map</title>
+    <script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
+    
+    <script type="text/javascript">
+  
+    var map;
+    var directionsService;
+    var directionsDisplay;
+  
+    function initialize() {
+        directionsService = new google.maps.DirectionsService();
+        directionsDisplay = new google.maps.DirectionsRenderer();
+
+        var mapContainer = document.getElementById("map_canvas");
+    
+        var myLatlng = new google.maps.LatLng(59.496005,18.294675);
+        var myOptions = {
+            zoom: 5,
+            center: myLatlng,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        }
+    
+        map = new google.maps.Map(mapContainer, myOptions);
+        directionsDisplay.setMap(map);
+        directionsDisplay.setPanel(document.getElementById("directionsPanel"));
+    }      
+
+    function calcRoute() {
+        var start = document.getElementById("start").value;
+        var end = document.getElementById("end").value;
+        var request = {
+            origin: start,
+            destination: end,
+            travelMode: google.maps.DirectionsTravelMode.DRIVING    
+        };
+        directionsService.route(request, function(response, status){
+            if (status == google.maps.DirectionsStatus.OK){
+                directionsDisplay.setDirections(response);
+            } else {
+                alert("Directions failed : " + status);
+                return;
+            }
+        });
+    }
+    </script>
+  </head>
+  <body onload="initialize()">
+    <div id="map_canvas"></div>
+    <h2>Route Map</h2>
+    <P>Select your City - Start/End </P>
+    <label for="start">Start:</label>
+    <select id="start" onchange= "calcRoute()">
+        <option value="Stockholm, Sverige">Stockholm</option>        
+        <option value="Göteborg, Sverige">Göteborg</option>
+        <option value="Kalmar, Sverige">Kalmar</option>
+        <option value="Helsingborg, Sverige">Helsingborg</option>        
+    </select>
+    <label for="end">End:</label>
+    <select id="end" onchange= "calcRoute()">
+        <option value="Stockholm, Sverige">Stockholm</option>        
+        <option value="Göteborg, Sverige">Göteborg</option>
+        <option value="Kalmar, Sverige">Kalmar</option>
+        <option value="Helsingborg, Sverige">Helsingborg</option>
+    </select>
+    
+    <div id="directionsPanel"></div>
+  
+    <script async defer
+  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRbsYuZ_egdJKtml2722388ODDJbTzk7Q&callback=initMap">
+    </script>  
+  </body>
+  <footer>
+    <p>Created by<a href= "https://www.boverock.se/"> www.boverock.se </a>Powered by GoogleMaps</p>
+  </footer>
+</html>

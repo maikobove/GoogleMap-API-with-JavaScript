@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Uppsala Castle</title>
+    <meta charset="UTF-8">
+    <style>
+       #map {
+        height: 400px;  
+        width: 100%;
+      }
+
+        body{
+            font-family: Arial, Helvetica, sans-serif;
+            color: darkseagreen;
+            text-align: left;        
+        }
+       
+        footer{
+            font-size: 80%;
+            color: whitesmoke;
+            background-color: darkseagreen;
+            position: fixed;
+            left: 0;
+            bottom: 30px;
+            width: 100%;
+            text-align: center;
+        }
+    </style>
+  </head>
+  <body>
+    <h2>Uppsala Castle</h2>
+    <div id="map"></div>
+    <script>
+    // Initialize and add the map
+    function initMap() {
+    // The location of Uppsala Castle
+      var uppsala_castle = {lat: 59.853359, lng: 17.635617};
+    // The map, centered 
+      var map = new google.maps.Map(
+      document.getElementById('map'), {zoom: 17, center: uppsala_castle});
+
+      var contentString = '<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<h2 id="firstHeading" class="firstHeading">Uppsala Castle</h2>'+ '<p><b>Uppsala Slott</b></p>'+  
+      '<div id="bodyContent">'+ 
+      '<a href="https://imgur.com/7lIobcs"><img src="https://i.imgur.com/7lIobcst.jpg" title="source: imgur.com" /></a>'+
+      '<p>The 16th-century royal castle in the historic city of Uppsala, Sweden.</p>'+      
+      '<p>Today, the castle is also the site of <a href="http://www.uppsalasmuseer.se/english/eng_uppsala_slott.html">'+
+      'the Uppsala Art Museum. </a></p>'+ '<p>Source: <a href="https://en.wikipedia.org/wiki/Uppsala_Castle">'+
+      'wikipedia.org/Uppsala_Castle</a> '+
+      '(2020).</p>'+ 
+      '</div>'+
+      '</div>';
+
+      var infowindow = new google.maps.InfoWindow({
+       content: contentString, 
+       maxWidth: 200
+      });
+        var marker = new google.maps.Marker({
+        position: uppsala_castle,
+        map: map,
+        animation: google.maps.Animation.DROP,
+        title: 'Uppsala Castle "Click" for info'});
+    marker.addListener('click', function() {infowindow.open(map, marker);});
+    }
+    </script>
+    <!--Load the API from the specified URL
+    * The async attribute allows the browser to render the page while the API loads
+    * The key parameter will contain your own API key 
+    * The callback parameter executes the initMap() function
+    -->
+    <script async defer
+    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRbsYuZ_egdJKtml2722388ODDJbTzk7Q
+    &callback=initMap">
+    </script>
+  </body>
+  <footer>
+    <p>Created by<a href= "https://www.boverock.se/"> www.boverock.se</a></p>
+  </footer>
+</html>

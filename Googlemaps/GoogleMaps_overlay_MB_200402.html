@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>Stockholm Län/Kommune</title>
+		<link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
+		<style>
+			#map_canvas {
+                height: 100%;  
+                width: 100%;    
+			}
+            
+            html body {
+                height: 100%;    
+                font-family: Arial, Helvetica, sans-serif;
+                color: darkseagreen;
+                text-align: center;
+            }
+
+            footer{
+                font-size: 70%;
+                color: whitesmoke;
+
+                position: fixed;
+                left: 0;
+                bottom: 0px;
+                width: 100%;
+                text-align: center;
+             }
+		</style>
+	</head>
+    <body onload="initialize()">
+        <h2>Stockholm Län & Kommune</h2>
+        <div id=button>
+            <label for="button">Click to ON/OFF </label>
+            <input type="button" value="Län" onclick="toggleCounty()"/>
+            <input type="button" value="Kommune" onclick="toggleMunicipality()"/> 
+            </div>  
+
+        <div id="map_canvas"></div>
+        <script type="text/javascript">
+
+			var map;
+			var country; 
+			var municipality; 
+            var countryStatus;
+            var municipalityStatus;
+
+			function initialize() {
+				var stockholm = new google.maps.LatLng(59.496005,18.294675);
+				var myOptions = {
+					zoom: 7,
+					center: stockholm,
+					mapTypeId: google.maps.MapTypeId.ROADMAP
+				}
+
+				map = new google.maps.Map(document.getElementById("map_canvas"), myOptions);
+				
+				country = new google.maps.KmlLayer("http://ocellus.se/files/yh/bove_stockholm_lan.kmz");
+				municipality = new google.maps.KmlLayer("http://ocellus.se/files/yh/bove_stockholm_kommun.kmz");
+
+				country.setMap(map);
+				municipality.setMap (map);
+
+                countryStatus = 1;
+                municipalityStatus = 1;
+
+			}
+            function toggleCounty (){
+                if(countryStatus == 1){
+                    country.setMap(null);
+                    countryStatus = 0;
+                }
+                else{
+                    country.setMap(map);
+                    countryStatus =1;
+                }
+            }
+            function toggleMunicipality (){
+                if(municipalityStatus == 1){
+                    municipality.setMap(null);
+                    municipalityStatus = 0;
+                }
+                else{
+                    municipality.setMap(map);
+                    municipalityStatus =1;
+                }
+            }
+  		</script>
+       
+      
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCRbsYuZ_egdJKtml2722388ODDJbTzk7Q&callback=initialize" async defer></script>
+    </body>
+    <footer>
+        <p>Created by<a href= "https://www.boverock.se/"> www.boverock.se</a></p>
+    </footer>
+</html>
